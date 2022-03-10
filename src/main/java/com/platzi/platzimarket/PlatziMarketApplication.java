@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PlatzimarketApplication {
+public class PlatziMarketApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PlatzimarketApplication.class, args);
+        SpringApplication.run(PlatziMarketApplication.class, args);
     }
 
 }
