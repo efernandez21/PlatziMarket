@@ -1,63 +1,78 @@
 package com.platzi.platzimarket.persistence;
 
+import com.platzi.platzimarket.domain.Product;
+import com.platzi.platzimarket.domain.repository.ProductRepository;
 import com.platzi.platzimarket.persistence.crud.ProductoCrudRepository;
 import com.platzi.platzimarket.persistence.entity.Producto;
+import com.platzi.platzimarket.persistence.mapper.ProductMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class ProductoRepository {
+public class ProductoRepository implements ProductRepository {
+    //Inyeccion del Repository original
     private ProductoCrudRepository productoCrudRepository;
+    private ProductMapper productMapper;
 
-
+    @Override
     //Metodo para recobrar la lista de productos
-    public List<Producto> getAll(){
-        return (List<Producto>) productoCrudRepository.findAll();
+    public List<Product> getAll(){
+        List<Producto> productosList = (List<Producto>) productoCrudRepository.findAll();
+        return productMapper.toProducts(productosList);
     }
-
     /**
      * Metodo para obtener un producto basado en un id de categoría
-     * @param idCategoria categoria a buscar
+     * @param categoryId categoria a buscar
      * @return la lista de productos que cumplen la condición
      */
-    public List<Producto> getByCategoria(int idCategoria){
-        return productoCrudRepository.findByIdCategoriaOrderByNombreAsc(idCategoria);
+    @Override
+    public Optional<List<Product>> getByCategory(int categoryId) {
+        List<Producto> productoList = productoCrudRepository.findByIdCategoriaOrderByNombreAsc(categoryId);
+        return Optional.of(productMapper.toProducts(productoList));
     }
-
     /**
      * Metodo para obtener los productos escasos
-     * @param cantidad cantidad minima de productos para revisar
+     * @param quantity cantidad minima de productos para revisar
      * @return los productos escasos de los que se debe hacer pedido
      */
-    public Optional<List<Producto>> getEscasos(int cantidad){
-        return productoCrudRepository.findByCantidadStockLessThanAndEstado(cantidad,true);
+    @Override
+    public Optional<List<Product>> getScarseProducts(int quantity) {
+        Optional<List<Producto>>  productosList = productoCrudRepository.findByCantidadStockLessThanAndEstado(quantity,
+                true);
+        //Mapeamos los productos a un Optional de Products
+        return productosList.map(productos -> productMapper.toProducts(productos));
     }
-
     /**
      * Metodo para obtener un producto con base en el id especificado
-     * @param idProducto id del producto a buscar
+     * @param productId id del producto a buscar
      * @return un Optional del producto en caso de que no haya tendremos un producto, tendremos un empty
      */
-    public Optional<Producto> getProducto(int idProducto){
-        return productoCrudRepository.findById(idProducto);
+    @Override
+    public Optional<Product> getProduct(int productId) {
+        Optional<Producto> prod = productoCrudRepository.findById(productId);
+        return prod.map(producto -> productMapper.toProduct(producto));
     }
-
     /**
      * Metodo para guardar un producto en la base de datos
-     * @param producto un Producto que sera almacenado
+     * @param product un Producto que sera almacenado
      * @return los datos del producto almacenado
      */
-    public Producto save(Producto producto){
-        return productoCrudRepository.save(producto);
+    @Override
+    public Product save(Product product) {
+        Producto producto = productMapper.toProducto(product);
+        return  productMapper.toProduct(productoCrudRepository.save(producto));
     }
+
+
 
     /**
      * Metodo que elimina un producto
-     * @param idProducto el id del producto a eliminar
+     * @param productId el id del producto a eliminar
      */
-    public void delete(int idProducto){
-        productoCrudRepository.deleteById(idProducto);
+    @Override
+    public void delete(int productId){
+        productoCrudRepository.deleteById(productId);
     }
 }
