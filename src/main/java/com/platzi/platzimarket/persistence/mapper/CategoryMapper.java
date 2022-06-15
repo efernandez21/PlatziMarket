@@ -18,7 +18,7 @@ public interface CategoryMapper {
     @Mapping(source = "estado", target = "active")
     Category toCategory(Categoria categoria);
     // Realizamos la conversion de manera inversa, ademas le indicamos que ignore la lista de elementos que es la que
-    // no contiene
+    // no contiene mi category que es mi dto
     @InheritInverseConfiguration
     @Mapping(target = "productos", ignore = true)
     Categoria toCategoria(Category category);

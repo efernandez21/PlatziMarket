@@ -5,6 +5,7 @@ import com.platzi.platzimarket.domain.repository.ProductRepository;
 import com.platzi.platzimarket.persistence.crud.ProductoCrudRepository;
 import com.platzi.platzimarket.persistence.entity.Producto;
 import com.platzi.platzimarket.persistence.mapper.ProductMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,8 +13,13 @@ import java.util.Optional;
 
 @Repository
 public class ProductoRepository implements ProductRepository {
-    //Inyeccion del Repository original
+    //Inyeccion del Repository original, si no usamos el autowired tendremos un null PointerException ya que no hemos
+    // inicializando el objeto, asi que los objetos los podemos crear con spring con Autowired, le cedemos el control
+    // a spring para que cree los objetos
+    @Autowired
     private ProductoCrudRepository productoCrudRepository;
+
+    @Autowired
     private ProductMapper productMapper;
 
     @Override
