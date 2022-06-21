@@ -35,6 +35,7 @@ public class Compra {
     @JoinColumn(name = "id_cliente", insertable = false, updatable = false)
     private Cliente cliente;
     //Relacion entre compras y compras producto, lista de los productos de una compra
-    @OneToMany(mappedBy = "compra")
+    //Todos los procesos que se hagan en la base de datos para una compra, van a incluir en cascada sus productos
+    @OneToMany(mappedBy = "compra", cascade = {CascadeType.ALL})
     private List<ComprasProducto> comprasProductos;
 }

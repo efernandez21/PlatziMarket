@@ -20,8 +20,9 @@ public class ComprasProducto {
     private Double total;
 
     private Boolean estado;
-
+    // Con MapIds enlazamos la clave primaria que queremos enlazar a mis comprasProducto
     @ManyToOne
+    @MapsId("idCompra")
     @JoinColumn(name = "id_compra", insertable = false, updatable = false)
     private Compra compra;
 

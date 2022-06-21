@@ -1,6 +1,6 @@
 package com.platzi.platzimarket.domain.service;
 
-import com.platzi.platzimarket.domain.Product;
+import com.platzi.platzimarket.domain.dto.Product;
 import com.platzi.platzimarket.domain.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class ProductService {
      * Metodo que retorna toda la lista de productos disponibles en mi base de datos
      * @return lista de productsDTO
      */
-    public List<Product> getALL(){
+    public List<Product> getAll(){
         return productRepository.getAll();
     }
 

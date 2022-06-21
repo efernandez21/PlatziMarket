@@ -1,4 +1,4 @@
-package com.platzi.platzimarket.domain;
+package com.platzi.platzimarket.domain.dto;
 
 import lombok.Getter;
 import lombok.Setter;
