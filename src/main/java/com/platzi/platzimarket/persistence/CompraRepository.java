@@ -11,6 +11,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Clase CompraRepository nos permitira con base en la interfaz de PurchaseRepository trabajar con las entidades y
+ * devolver los dtos para mostrar fuera de la aplicacion
+ */
 @Repository
 public class CompraRepository implements PurchaseRepository {
 
