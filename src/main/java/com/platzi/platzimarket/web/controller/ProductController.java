@@ -2,6 +2,10 @@ package com.platzi.platzimarket.web.controller;
 
 import com.platzi.platzimarket.domain.dto.Product;
 import com.platzi.platzimarket.domain.service.ProductService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +22,25 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    //Documentando la api
     @GetMapping("/all")
+    @ApiOperation("Get all supermarket Products")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Operacion Realizada Ok")
+    })
     public ResponseEntity<List<Product>> getAllProducts(){
         // Creamos un objeto de tipo Response Entity que es lo que devolvemos
         return new ResponseEntity<>(productService.getAll(), HttpStatus.OK);
     }
+
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable("id") int productId){
+    @ApiOperation("Search a product with an ID Products")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Operacion Realizada Ok"),
+            @ApiResponse(code = 404, message = "Producto no encontrado"),
+    })
+    public ResponseEntity<Product> getProductById(@ApiParam(value = "The id of the product", required = true,
+            example = "7") @PathVariable("id") int productId){
         //Si no se ejecuta el map devolvemos que no existe, el notFound no retorna nada
         return productService.getProduct(productId)
                 //Podemos usar esta otra opcion para realizar lo mismo del map y el orElse
