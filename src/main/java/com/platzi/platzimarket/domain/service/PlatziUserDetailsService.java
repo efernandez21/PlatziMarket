@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 /**
  * Servicio para la implementacion de la credencial de un usuario para mi aplicacion
+ * este servicio es el que deberia hacer la verificacion en bd de las credenciales de los usuarios
  */
 @Service
 public class PlatziUserDetailsService  implements UserDetailsService {

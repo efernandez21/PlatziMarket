@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.platzi'
-version = '0.0.1-SNAPSHOT'
+version = '1.0'
 sourceCompatibility = '11'
 
 repositories {
@@ -32,6 +32,10 @@ dependencies {
     // Dependencias para swagger 3.0
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
     implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+
+    // Dependencia para el JWT
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
 
 
 }
